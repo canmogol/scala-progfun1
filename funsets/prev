@@ -77,7 +77,6 @@ class FunSetSuite extends FunSuite {
     val s1 = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
-    val s4 = union(union(union(union(union(s1, s3),singletonSet(4)),singletonSet(5)),singletonSet(7)),singletonSet(1000))
   }
 
   /**
@@ -114,91 +113,13 @@ class FunSetSuite extends FunSuite {
 	test("intersect of singleton sets ok") {
     new TestSets {
       val inter = intersect(s1, s2)
-      assert(!contains(inter, 1), "inter 1")
-      assert(!contains(inter, 2), "inter 2") 
+      assert(!contains(inter, 1))
+      assert(!contains(inter, 2)) 
       val sameInter = intersect(s1, singletonSet(1))
-      assert(contains(sameInter, 1), "same set inter")
+      assert(contains(sameInter, 1))
 		}
 	}
   
-  test("diff of singleton sets ok") {
-    new TestSets {
-      val df = diff(s1, s2)
-      assert(contains(df, 1), "diff 1")
-      assert(contains(df, 2), "diff 2")
-      val dfSame = diff(s1, singletonSet(1))
-      assert(!contains(dfSame, 1), "diff same")
-    }
-  }
-
-  test("filter of singleton sets") {
-    new TestSets {
-      val filterSet = filter(s1, x=>x==1)
-      printSet(filterSet)
-      assert(contains(filterSet, 1), "singleton set 1")
-      assert(!contains(filterSet, 0), "singleton set 1")
-      val filteredSet = filter(s4, x=>x<5)
-      printSet(s4)
-      printSet(filteredSet)
-    }
-  }
-
-  test("1 exists in of singleton set 1, 2 in 2, 0 not in 3") {
-    new TestSets {
-      val result1 = exists(s1, x=>x==1)
-      assert(result1 == true, "1 singleton 1")
-      val result2 = exists(s2, x=>x==2)
-      assert(result2 == true, "2 singleton 2")
-      val result3 = exists(s3, x=>x==0)
-      assert(result3 == false, "0 singleton 3")
-    }
-  }
-
-  test("map singleton set with func x*2") {
-    new TestSets {
-      val mappedSetS = map(s1, x=>x-1)
-      //printSet(mappedSetS)
-      val resultS = exists(mappedSetS, x=>x==0)
-      //println(resultS)
-      assert(resultS == true, "subtract map") 
-
-      val mappedSet1 = map(s1, x=>x*2)
-      //printSet(mappedSet1)
-      val result1 = exists(mappedSet1, x=>x==2)
-      //println(result1)
-      assert(result1 == true, "2 in mapped set 1") 
-
-      val mappedSet2 = map(s2, x=>x*2)
-      //printSet(mappedSet2)
-      val result2 = exists(mappedSet2, x=>x==4)
-      //println(result2)
-      assert(result2 == true, "4 in mapped set 2") 
-
-      val mappedSet3 = map(s3, x=>x*3)
-      //printSet(mappedSet3)
-      val result3 = exists(mappedSet3, x=>x==9)
-      //println(result3)
-      assert(result3 == true, "9 in mapped set 3") 
-
-      val mappedSet3Fail = map(s3, x=>x*3)
-      //printSet(mappedSet3Fail)
-      val result3Fail = exists(mappedSet3Fail, x=>x==0)
-      //println(result3Fail)
-      assert(result3Fail == false, "0 not in mapped set 3") 
-    }
-  }
-
-  test("All elements in the set are not strictly less than 5") {
-    new TestSets {
-      // def forall(s: Set, p: Int => Boolean): Boolean
-      //printSet(s4)
-      assert(forall(s4, x=>x<5)==false, "less than 5")
-      assert(forall(s1, x=>x<2)==true, "x < 2 for s1")
-      assert(forall(s2, x=>x<3)==true, "x < 3 for s2")
-      assert(forall(s2, x=>x<0)==false, "x < 0 not correct for s2")
-    }
-  }
-
-
+  test("")
 
 }

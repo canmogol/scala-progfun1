@@ -19,31 +19,35 @@ object FunSets {
   /**
    * Returns the set of the one given element.
    */
-    def singletonSet(elem: Int): Set = ???
+    def singletonSet(elem: Int): Set = (e:Int) => e == elem
   
 
   /**
    * Returns the union of the two given sets,
    * the sets of all elements that are in either `s` or `t`.
    */
-    def union(s: Set, t: Set): Set = ???
+    def union(s: Set, t: Set): Set = 
+	    (e:Int) => contains(s,e)||contains(t,e)
   
   /**
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
-    def intersect(s: Set, t: Set): Set = ???
+    def intersect(s: Set, t: Set): Set =
+      (e:Int) => contains(s,e)&&contains(t,e) 
   
   /**
    * Returns the difference of the two given sets,
    * the set of all elements of `s` that are not in `t`.
    */
-    def diff(s: Set, t: Set): Set = ???
+    def diff(s: Set, t: Set): Set =
+      (e:Int) => contains(s,e)^contains(t,e) 
   
   /**
    * Returns the subset of `s` for which `p` holds.
    */
-    def filter(s: Set, p: Int => Boolean): Set = ???
+    def filter(s: Set, p: Int => Boolean): Set =
+      (e:Int) => if(contains(s,e)) forall(s, p) else false
   
 
   /**
@@ -55,25 +59,36 @@ object FunSets {
    * Returns whether all bounded integers within `s` satisfy `p`.
    */
     def forall(s: Set, p: Int => Boolean): Boolean = {
-    def iter(a: Int): Boolean = {
-      if (???) ???
-      else if (???) ???
-      else iter(???)
-    }
-    iter(???)
+      def iter(a: Int): Boolean = {
+        if (a > bound) true
+        else if (contains(s, a) && !p(a)) false 
+        else iter(a+1)
+      }
+      iter(-bound)
   }
   
   /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-    def exists(s: Set, p: Int => Boolean): Boolean = ???
+    def exists(s: Set, p: Int => Boolean): Boolean =
+      forall(s,p) 
   
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-    def map(s: Set, f: Int => Int): Set = ???
-  
+    def map(s: Set, f: Int => Int): Set = {
+      (e:Int)=>forall(s, (e2:Int)=>{e == f(e2)})
+      /*
+      def iter(a: Int): Set = {
+        if (a > bound) (e:Int) => false
+        else if (contains(s, a)) singletonSet(f(a)) 
+        else iter(a+1)
+      }
+      iter(-bound)
+      */
+  }
+ 
   /**
    * Displays the contents of a set
    */
