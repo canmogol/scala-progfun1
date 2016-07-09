@@ -1,8 +1,12 @@
 package week3
 
+import week3._
+
 object Main {
+
 	def main(args:Array[String]) = {
-		val empty = Empty
+		/*
+    val empty = Empty
 		val tree7 = empty incl 7
 		println(tree7)
 		val tree5 = tree7 incl 5
@@ -16,7 +20,18 @@ object Main {
 		val other = new NonEmpty(6, Empty, Empty)
 		val unionOther = other union tree13
 		println(unionOther)
-	}
+	  */
+
+    //val rational = new Rational(1,2)
+    //println(rational)
+  
+    //error("Hi")  
+    //println("-") 
+
+    
+ }
+
+  def error(msg:String) = throw new Error(msg)
 }
 
 abstract class IntSet{
