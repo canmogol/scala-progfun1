@@ -141,7 +141,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
         else left.filter(p).union(right.filter(p))
 
   def union(that: TweetSet): TweetSet = {
-        ((left union right) union that) incl elem
+        (left union (right union that)) incl elem
   }
  
   def mostRetweeted: Tweet = {
@@ -290,8 +290,8 @@ object Main extends App {
 
   n54123.descendingByRetweet.foreach((t)=>println("mrt> "+t.retweets))
 
-
-
+  val allTweets: TweetSet = TweetReader.allTweets
+  allTweets.foreach((t)=>println("t>"+t.retweets))
 
 
 
