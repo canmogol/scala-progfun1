@@ -66,7 +66,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-    def mostRetweeted: Tweet = ???
+    def mostRetweeted: Tweet  
   
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -77,7 +77,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-    def descendingByRetweet: TweetList = ???
+    def descendingByRetweet: TweetList 
   
   /**
    * The following methods are already implemented
@@ -113,7 +113,10 @@ class Empty extends TweetSet {
 
   def union(that: TweetSet): TweetSet = that
 
-  
+  def mostRetweeted: Tweet = null 
+
+  def descendingByRetweet: TweetList = Nil
+ 
   /**
    * The following methods are already implemented
    */
@@ -140,7 +143,34 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def union(that: TweetSet): TweetSet = {
         ((left union right) union that) incl elem
   }
-  
+ 
+  def mostRetweeted: Tweet = {
+    var cn = new Cons(elem, Nil)
+    foreach((t)=>
+        if(t.retweets>cn.head.retweets){
+          cn = new Cons(t, Nil)
+        })
+    cn.head
+  }
+
+  def descendingByRetweet: TweetList = {
+    def x(cs:TweetSet, tl:TweetList):TweetList = {
+      val mrt = cs.mostRetweeted
+      println("mrt: "+mrt)
+      if(mrt != null){
+        val set = cs.remove(mrt)
+        println("removed set call")
+        x(set, new Cons(mrt, tl))
+      }else{
+        println("returning tl")
+        tl
+      }
+    }
+    println("start")
+    x(this, Nil)
+  }
+
+ 
   /**
    * The following methods are already implemented
    */
@@ -197,15 +227,15 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-    lazy val googleTweets: TweetSet = ???
+  lazy val googleTweets: TweetSet = ???
   lazy val appleTweets: TweetSet = ???
   
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-     lazy val trending: TweetList = ???
-  }
+  lazy val trending: TweetList = ???
+}
 
 object Main extends App {
   // Print the trending tweets
@@ -231,6 +261,26 @@ object Main extends App {
   println("")
   println("filter n123  "+n123.filter((t)=>(t.retweets<3000)))
   println("filter n123+ "+n123.filter((t)=>(t.retweets<3001)))
+  println("filter n123m "+n123.mostRetweeted)
+
+  val n4 = ct("n4","4000",4000, new Empty, new Empty)
+  val n5 = ct("n5","5000",5000, new Empty, new Empty)
+
+  val n54123 = n5.union(n4).union(n123) 
+  println("")
+  println("filter n12345  "+n54123)
+  println("filter n12345m "+n54123.mostRetweeted)
+
+
+  n54123.descendingByRetweet.foreach((t)=>println("mrt> "+t.retweets))
+
+
+
+
+
+
+
+
 
 
 

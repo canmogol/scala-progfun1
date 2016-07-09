@@ -1,4 +1,5 @@
 .mtj.tmp/
+*.swp
 *.jar
 *.war
 *.ear
